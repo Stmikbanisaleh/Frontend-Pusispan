@@ -15,7 +15,9 @@ class Home extends CI_Controller
         $data['user'] = $this->db->get_where('msuser', ['email' =>
         $this->session->userdata('email')])->row_array();
 
-        $data['berita'] = $this->m_home->getListBerita();
+        $hasil_listberita = $this->lapan_api_library->call('berita/getlistberita', ['token' => TOKEN]);
+        $data['berita'] = $hasil_listberita['rows'];
+
         $data['agenda'] = $this->m_home->getListAgenda();
         $data['kmt'] = $this->m_home->getKegiatanMT();
         $data['kat'] = $this->m_home->getKegiatanAT();
