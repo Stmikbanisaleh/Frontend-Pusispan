@@ -18,17 +18,41 @@ class Home extends CI_Controller
         $hasil_listberita = $this->lapan_api_library->call('berita/getlistberita', ['token' => TOKEN]);
         $data['berita'] = $hasil_listberita['rows'];
 
-        $data['agenda'] = $this->m_home->getListAgenda();
-        $data['kmt'] = $this->m_home->getKegiatanMT();
-        $data['kat'] = $this->m_home->getKegiatanAT();
-        $data['kst'] = $this->m_home->getKegiatanST();
-        $data['sejarah'] = $this->m_home->getIsiHalaman('sejarah_singkat');
+        $hasil_listagenda = $this->lapan_api_library->call('agenda/getlistagenda', ['token' => TOKEN]);
+        $data['agenda'] = $hasil_listagenda['rows'];
 
-        $data['link'] = $this->db->get('link_terkait')->result_array();
-        $data['akses'] = $this->db->get('akses_cepat')->result_array();
+        $hasil_getkegiatanmt = $this->lapan_api_library->call('kegiatan/getkegiatanmt', ['token' => TOKEN]);
+        $data['kmt'] = $hasil_getkegiatanmt['rows'][0];
+
+        $hasil_getkegiatanat = $this->lapan_api_library->call('kegiatan/getkegiatanat', ['token' => TOKEN]);
+        $data['kat'] = $hasil_getkegiatanat['rows'][0];
+
+        $hasil_getkegiatanst = $this->lapan_api_library->call('kegiatan/getkegiatanst', ['token' => TOKEN]);
+        $data['kst'] = $hasil_getkegiatanst['rows'][0];
+
+        $hasil_getisihalaman = $this->lapan_api_library->call('halaman/getisihalaman', ['token' => TOKEN, 'seo' => 'sejarah_singkat']);
+        $data['sejarah'] = $hasil_getisihalaman['rows'];
+
+        //=============================================================================================================================//
+
         $data['uri'] = $this->uri->segment(1);
-        $data['menu'] = $this->db->get_where('menu', array('id_parent' => '', 'id_posisi' => 1))->result_array();
-        $data['submenu'] = $this->db->get('menu')->result_array();
+
+        $getlistlink = $this->lapan_api_library->call('link/getlink', ['token' => TOKEN]);
+        $data['link'] = $getlistlink['rows'];
+
+        $getaksescepat = $this->lapan_api_library->call('aksescepat/getaksescepat', ['token' => TOKEN]);
+        $data['akses'] = $getaksescepat['rows'];
+
+        $data_menuwhere = [
+            'token' => TOKEN,
+            'id_parent' => '',
+            'id_posisi' => 1
+        ];
+        $getmenuwhere = $this->lapan_api_library->call('menu/getmenuwhere', $data_menuwhere);
+        $data['menu'] = $getmenuwhere['rows'];
+
+        $getmenu = $this->lapan_api_library->call('menu/getmenu', ['token' => TOKEN]);
+        $data['submenu'] = $getmenu['rows'];
 
         $this->load->view('template/header', $data);
         $this->load->view('home', $data);
