@@ -23,7 +23,8 @@ class Profile extends CI_Controller
         $data['user'] = $this->db->get_where('msuser', ['email' =>
         $this->session->userdata('email')])->row_array();
 
-        $data['sejarah'] = $this->m_home->getIsiHalaman('sejarah_singkat');
+        $hasil_getisihalaman = $this->lapan_api_library->call('halaman/getisihalaman', ['token' => TOKEN, 'seo' => 'sejarah_singkat']);
+        $data['sejarah'] = $hasil_getisihalaman['rows'][0];
 
         //=============================================================================================================================//
 
