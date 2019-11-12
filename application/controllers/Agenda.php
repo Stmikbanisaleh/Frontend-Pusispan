@@ -17,8 +17,10 @@ class Agenda extends CI_Controller
         $this->load->library('pagination');
 
         $config['base_url'] = base_url().'agenda/index';
-        //$config['base_url'] = 'http://pusispan.stmik-banisaleh.com/pusispan/agenda/index';
-        $config['total_rows'] = $this->m_agenda->hitungJumlahagenda();
+
+        $getlist_agenda = $this->lapan_api_library->call('agenda/getlistagenda', ['token' => TOKEN]);
+        $config['total_rows'] = count($getlist_agenda['rows']);
+
         $config['per_page'] = 4;
 
         $config['full_tag_open'] = '<nav><ul class="pagination ">';
@@ -51,10 +53,14 @@ class Agenda extends CI_Controller
         $this->pagination->initialize($config);
 
         $data['start'] = $this->uri->segment(3);
-        $data['agenda'] = $this->m_agenda->getAgenda($config['per_page'], $data['start']);
 
-        // print_r($this->db->last_query()); exit;
-
+        $data_paging = [
+            'token' => TOKEN,
+            'limit' => $config['per_page'],
+            'start' => $data['start']
+        ];
+        $getlist_paging = $this->lapan_api_library->call('agenda/getagendapaging', $data_paging);
+        $data['agenda'] = $getlist_paging;
 
         //=============================================================================================================================//
 

@@ -20,7 +20,7 @@ class Home extends CI_Controller
         $hasil_listberita = $this->lapan_api_library->call('berita/getlistberita', ['token' => TOKEN]);
         $data['berita'] = $hasil_listberita['rows'];
 
-        $hasil_listagenda = $this->lapan_api_library->call('agenda/getlistagenda', ['token' => TOKEN]);
+        $hasil_listagenda = $this->lapan_api_library->call('agenda/getlistagendalimit3', ['token' => TOKEN]);
         $data['agenda'] = $hasil_listagenda['rows'];
 
         $hasil_getkegiatanmt = $this->lapan_api_library->call('kegiatan/getkegiatanmt', ['token' => TOKEN]);
