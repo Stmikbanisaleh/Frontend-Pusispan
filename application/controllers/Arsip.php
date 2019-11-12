@@ -16,7 +16,7 @@ class Arsip extends CI_Controller
 
         $this->load->library('pagination');
 
-        $config['base_url'] = 'http://localhost/pusispan/arsip/index';
+        $config['base_url'] = base_url().'arsip/index';
         //$config['base_url'] = 'http://pusispan.stmik-banisaleh.com/pusispan/download/index';
         $config['total_rows'] = $this->m_download->hitungJumlahdownload();
         $config['per_page'] = 10;

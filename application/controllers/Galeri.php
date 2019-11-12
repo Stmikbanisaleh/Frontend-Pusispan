@@ -17,7 +17,7 @@ class Galeri extends CI_Controller
 
         $this->load->library('pagination');
 
-        $config['base_url'] = 'http://localhost/pusispan/galeri/index';
+        $config['base_url'] = base_url().'galeri/index';
         //$config['base_url'] = 'http://pusispan.stmik-banisaleh.com/pusispan/berita/index';
         $config['total_rows'] = $this->m_galeri->hitungJumlahGaleri();
         $config['per_page'] = 6;

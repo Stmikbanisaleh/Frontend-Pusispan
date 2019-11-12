@@ -16,7 +16,7 @@ class Agenda extends CI_Controller
 
         $this->load->library('pagination');
 
-        $config['base_url'] = 'http://localhost/pusispan/agenda/index';
+        $config['base_url'] = base_url().'agenda/index';
         //$config['base_url'] = 'http://pusispan.stmik-banisaleh.com/pusispan/agenda/index';
         $config['total_rows'] = $this->m_agenda->hitungJumlahagenda();
         $config['per_page'] = 4;
@@ -53,12 +53,27 @@ class Agenda extends CI_Controller
         $data['start'] = $this->uri->segment(3);
         $data['agenda'] = $this->m_agenda->getAgenda($config['per_page'], $data['start']);
 
+        // print_r($this->db->last_query()); exit;
 
-        $data['link'] = $this->db->get('link_terkait')->result_array();
-        $data['akses'] = $this->db->get('akses_cepat')->result_array();
-        $data['uri'] = $this->uri->segment(1);
-        $data['menu'] = $this->db->get_where('menu', array('id_parent' => '', 'id_posisi' => 1))->result_array();
-        $data['submenu'] = $this->db->get('menu')->result_array();
+
+        //=============================================================================================================================//
+
+        $getlistlink = $this->lapan_api_library->call('link/getlink', ['token' => TOKEN]);
+        $data['link'] = $getlistlink['rows'];
+
+        $getaksescepat = $this->lapan_api_library->call('aksescepat/getaksescepat', ['token' => TOKEN]);
+        $data['akses'] = $getaksescepat['rows'];
+
+        $data_menuwhere = [
+            'token' => TOKEN,
+            'id_parent' => '',
+            'id_posisi' => 1
+        ];
+        $getmenuwhere = $this->lapan_api_library->call('menu/getmenuwhere', $data_menuwhere);
+        $data['menu'] = $getmenuwhere['rows'];
+
+        $getmenu = $this->lapan_api_library->call('menu/getmenu', ['token' => TOKEN]);
+        $data['submenu'] = $getmenu['rows'];
 
         $this->load->view('template/header', $data);
         $this->load->view('agenda/index');

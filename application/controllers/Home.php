@@ -15,6 +15,8 @@ class Home extends CI_Controller
         $data['user'] = $this->db->get_where('msuser', ['email' =>
         $this->session->userdata('email')])->row_array();
 
+        // print_r(json_encode($data['user']));exit;
+
         $hasil_listberita = $this->lapan_api_library->call('berita/getlistberita', ['token' => TOKEN]);
         $data['berita'] = $hasil_listberita['rows'];
 
@@ -62,9 +64,17 @@ class Home extends CI_Controller
     public function page()
     {
         $data['uri'] = $this->uri->segment(1);
-        $data['menu'] = $this->db->get_where('menu', array('id_parent' => '', 'id_posisi' => 1))->result_array();
-        $data['submenu'] = $this->db->get_where('menu', array('id_parent' => '2'))->result_array();
+        $data_menuwhere = [
+            'token' => TOKEN,
+            'id_parent' => '',
+            'id_posisi' => 1
+        ];
+        $getmenuwhere = $this->lapan_api_library->call('menu/getmenuwhere', $data_menuwhere);
+        $data['menu'] = $getmenuwhere['rows'];
 
+        $getmenu = $this->lapan_api_library->call('menu/getmenu', ['token' => TOKEN]);
+        $data['submenu'] = $getmenu['rows'];
+        
         $this->load->view('template/header', $data);
         $this->load->view('page', $data);
         $this->load->view('template/footer', $data);

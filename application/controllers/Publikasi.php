@@ -10,7 +10,9 @@ class Publikasi extends CI_Controller
         $this->session->userdata('email')])->row_array();
 
         $data['title'] = "Publikasi";
-        $data['pub'] = $this->db->get_where('halamanstatis', array('judul_seo' => 'publikasi'))->row_array();
+        
+        $hasil_getisihalaman = $this->lapan_api_library->call('halaman/getisihalaman', ['token' => TOKEN, 'seo' => 'publikasi']);
+        $data['pub'] = $hasil_getisihalaman['rows'][0];
 
         //=============================================================================================================================//
 
@@ -32,7 +34,7 @@ class Publikasi extends CI_Controller
 
         $getmenu = $this->lapan_api_library->call('menu/getmenu', ['token' => TOKEN]);
         $data['submenu'] = $getmenu['rows'];
-        
+
         $this->load->view('template/header', $data);
         $this->load->view('publikasi');
         $this->load->view('template/footer');

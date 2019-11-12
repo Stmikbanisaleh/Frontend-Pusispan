@@ -9,7 +9,8 @@ class Litbangyasa extends CI_Controller
         $data['user'] = $this->db->get_where('msuser', ['email' =>
         $this->session->userdata('email')])->row_array();
 
-        $data['lit'] = $this->db->get_where('halamanstatis', array('judul_seo' => 'litbangyasa'))->row_array();
+        $hasil_getisihalaman = $this->lapan_api_library->call('halaman/getisihalaman', ['token' => TOKEN, 'seo' => 'litbangyasa']);
+        $data['lit'] = $hasil_getisihalaman['rows'][0];
 
         //=============================================================================================================================//
 
