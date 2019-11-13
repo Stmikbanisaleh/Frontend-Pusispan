@@ -20,8 +20,7 @@ class Profile extends CI_Controller
 
     public function sejarah_singkat()
     {
-        $data['user'] = $this->db->get_where('msuser', ['email' =>
-        $this->session->userdata('email')])->row_array();
+        $data['user'] = $this->lapan_api_library->call3('users/getuserbyemail', ['token' => TOKEN, $this->session->userdata('email')]);
 
         $hasil_getisihalaman = $this->lapan_api_library->call('halaman/getisihalaman', ['token' => TOKEN, 'seo' => 'sejarah_singkat']);
         $data['sejarah'] = $hasil_getisihalaman['rows'][0];

@@ -78,9 +78,9 @@
                                     <a class="btn btn-xs btn-default" href="<?= base_url('login/logout') ?>">Logout</a>
                                 </ul>
                             <?php } else { ?>
-                                <ul class="topbar-list topbar-log_reg pull-right visible-sm-block visible-md-block visible-lg-block">
+                               <!--  <ul class="topbar-list topbar-log_reg pull-right visible-sm-block visible-md-block visible-lg-block">
                                     <li class="cd-log_reg home"><a href="<?= base_url('login'); ?>">Login</a></li>
-                                </ul>
+                                </ul> -->
                             <?php } ?>
                         </div>
                         <br>

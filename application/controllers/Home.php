@@ -12,10 +12,7 @@ class Home extends CI_Controller
 
     public function index()
     {
-        $data['user'] = $this->db->get_where('msuser', ['email' =>
-        $this->session->userdata('email')])->row_array();
-
-        // print_r(json_encode($data['user']));exit;
+         $data['user'] = $this->lapan_api_library->call3('users/getuserbyemail', ['token' => TOKEN, $this->session->userdata('email')]);
 
         $hasil_listberita = $this->lapan_api_library->call('berita/getlistberita', ['token' => TOKEN]);
         $data['berita'] = $hasil_listberita['rows'];
@@ -63,6 +60,8 @@ class Home extends CI_Controller
 
     public function page()
     {
+        $data['user'] = $this->lapan_api_library->call3('users/getuserbyemail', ['token' => TOKEN, $this->session->userdata('email')]);
+        
         $data['uri'] = $this->uri->segment(1);
         $data_menuwhere = [
             'token' => TOKEN,
