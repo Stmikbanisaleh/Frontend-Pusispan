@@ -15,9 +15,13 @@ class Berita extends CI_Controller
 
         $this->load->library('pagination');
 
-        $config['base_url'] = 'http://localhost/pusispan/berita/index';
+        $config['base_url'] = base_url().'berita/index';
         //$config['base_url'] = 'http://pusispan.stmik-banisaleh.com/pusispan/berita/index';
-        $config['total_rows'] = $this->m_berita->hitungJumlahBerita();
+        // $config['total_rows'] = $this->m_berita->hitungJumlahBerita();
+
+        $getlist_berita = $this->lapan_api_library->call('berita/getlistberita', ['token' => TOKEN]);
+        $config['total_rows'] = count($getlist_berita['rows']);
+
         $config['per_page'] = 4;
 
         $config['full_tag_open'] = '<nav><ul class="pagination ">';
@@ -50,7 +54,17 @@ class Berita extends CI_Controller
         $this->pagination->initialize($config);
 
         $data['start'] = $this->uri->segment(3);
-        $data['getBerita'] = $this->m_berita->getBerita($config['per_page'], $data['start']);
+        // $data['getBerita'] = $this->m_berita->getBerita($config['per_page'], $data['start']);
+
+        $data_paging = [
+            'token' => TOKEN,
+            'limit' => $config['per_page'],
+            'start' => $data['start']
+        ];
+        $getlist_paging = $this->lapan_api_library->call('berita/getberitapaging', $data_paging);
+        $data['getBerita'] = $getlist_paging;
+
+        // print_r(json_encode($data['getBerita']));exit;
 
 
         //=============================================================================================================================//
