@@ -53,9 +53,7 @@ class Profile extends CI_Controller
 
     public function peran_tanggungjawab()
     {
-        $data['user'] = $this->db->get_where('msuser', ['email' =>
-        $this->session->userdata('email')])->row_array();
-
+    
         $hasil_getisihalaman = $this->lapan_api_library->call('halaman/getisihalaman', ['token' => TOKEN, 'seo' => 'peran_tanggungjawab']);
         $data['peran'] = $hasil_getisihalaman['rows'][0];
 
@@ -87,8 +85,6 @@ class Profile extends CI_Controller
 
     public function struktur_organisasi()
     {
-        $data['user'] = $this->db->get_where('msuser', ['email' =>
-        $this->session->userdata('email')])->row_array();
 
         $hasil_getisihalaman = $this->lapan_api_library->call('halaman/getisihalaman', ['token' => TOKEN, 'seo' => 'struktur_organisasi']);
         $data['struktur'] = $hasil_getisihalaman['rows'][0];
