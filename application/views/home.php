@@ -34,21 +34,21 @@
             <div id="myCarousel" class="carousel slide carousel-v1">
                 <div class="carousel-inner">
                     <div class="item active">
-                        <img src="assets/img_kegiatan/<?= $kmt['gambar']; ?>" alt="">
+                        <img src="<?= URL_API_DOWNLOAD .$kmt['gambar']; ?>" alt="">
                         <div class="carousel-caption">
                             <p><?= $kmt['nama_kegiatan']; ?></p>
                             <p><?= $kmt['tempat']; ?> , <?= date('d-m-Y', strtotime($kmt['tanggal'])); ?></p>
                         </div>
                     </div>
                     <div class="item">
-                        <img src="assets/img_kegiatan/<?= $kat['gambar']; ?>" alt="">
+                        <img src="<?= URL_API_DOWNLOAD . $kat['gambar']; ?>" alt="">
                         <div class="carousel-caption">
                             <p><?= $kat['nama_kegiatan']; ?></p>
                             <p><?= $kat['tempat']; ?> , <?= date('d-m-Y', strtotime($kat['tanggal'])); ?></p>
                         </div>
                     </div>
                     <div class="item">
-                        <img src="assets/img_kegiatan/<?= $kst['gambar']; ?>" alt="">
+                        <img src="<?= URL_API_DOWNLOAD . $kst['gambar']; ?>" alt="">
                         <div class="carousel-caption">
                             <p><?= $kst['nama_kegiatan']; ?></p>
                             <p><?= $kst['tempat']; ?> , <?= date('d-m-Y', strtotime($kst['tanggal'])); ?></p>

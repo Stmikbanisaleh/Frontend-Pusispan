@@ -29,6 +29,7 @@ class Publikasi extends CI_Controller
         ];
         $getmenuwhere = $this->lapan_api_library->call('menu/getmenuwhere', $data_menuwhere);
         $data['menu'] = $getmenuwhere['rows'];
+        $data['user'] = $this->lapan_api_library->call3('users/getuserbyemail', ['token' => TOKEN, $this->session->userdata('email')]);
 
         $getmenu = $this->lapan_api_library->call('menu/getmenu', ['token' => TOKEN]);
         $data['submenu'] = $getmenu['rows'];

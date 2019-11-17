@@ -6,19 +6,19 @@ class Arsip extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('Download_model', 'm_download');
     }
 
     public function index()
     {
-        $data['user'] = $this->db->get_where('msuser', ['email' =>
-        $this->session->userdata('email')])->row_array();
 
         $this->load->library('pagination');
+        $data['user'] = $this->lapan_api_library->call3('users/getuserbyemail', ['token' => TOKEN, 'email' => $this->session->userdata('email')]);
 
         $config['base_url'] = base_url().'arsip/index';
         //$config['base_url'] = 'http://pusispan.stmik-banisaleh.com/pusispan/download/index';
-        $config['total_rows'] = $this->m_download->hitungJumlahdownload();
+        $jml = $this->lapan_api_library->call('download/jmldownload', ['token' => TOKEN]);
+
+        $config['total_rows'] = $jml['rows'];
         $config['per_page'] = 10;
 
         $config['full_tag_open'] = '<nav><ul class="pagination ">';
@@ -51,7 +51,13 @@ class Arsip extends CI_Controller
         $this->pagination->initialize($config);
 
         $data['start'] = $this->uri->segment(3);
-        $data['download'] = $this->m_download->getDownload($config['per_page'], $data['start']);
+        $data_paging = [
+            'token' => TOKEN,
+            'limit' => $config['per_page'],
+            'start' => $data['start']
+        ];
+        $getlist_paging = $this->lapan_api_library->call('download/getdownloadpaging', $data_paging);
+        $data['download'] = $getlist_paging;
 
 
         //=============================================================================================================================//

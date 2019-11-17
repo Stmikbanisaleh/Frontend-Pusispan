@@ -8,7 +8,7 @@
                 <div class="row margin-top-20">
                     <div class="col-md-2">
                         <a href="<?= base_url() ?>berita/read/<?= $gb['judul_seo'] ?>">
-                            <img height="140px" width="140px" class="img-thumbnail" src="<?= base_url() ?>assets/img_berita/<?= $gb['gambar']; ?>">
+                            <img height="140px" width="140px" class="img-thumbnail" src="<?= URL_API_DOWNLOAD.  $gb['gambar']; ?>">
                         </a>
                     </div>
                     <div class="col-md-10 blog-thumb-v3">

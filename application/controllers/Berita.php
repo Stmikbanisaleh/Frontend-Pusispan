@@ -90,17 +90,18 @@ class Berita extends CI_Controller
 
     public function read($seo)
     {
-        $data['user'] = $this->lapan_api_library->call3('users/getuserbyemail', ['token' => TOKEN, 'email' => $this->session->userdata('email')]);
+        // $data['user'] = $this->lapan_api_library->call3('users/getuserbyemail', ['token' => TOKEN, 'email' => $this->session->userdata('email')]);
 
-        $this->load->model('Berita_model', 'm_berita');
+        // $this->load->model('Berita_model', 'm_berita');
         $data['user'] = $this->lapan_api_library->call3('users/getuserbyemail', ['token' => TOKEN, $this->session->userdata('email')]);
 
         $getlist_berita = $this->lapan_api_library->call('berita/getlistberita', ['token' => TOKEN]);
         $data['getBeritaList'] = $getlist_berita['rows'];
 
         $get_beritadetail = $this->lapan_api_library->call('berita/getberitadetail', ['token' => TOKEN, 'judul_seo' => $seo]);
+        // print_r($get_beritadetail);exit;
         $data['getBeritaDetail'] = $get_beritadetail['rows'];
-        $data['getBeritaDetail'] = $this->m_berita->getBeritaDetail($seo);
+        // $data['getBeritaDetail'] = $this->m_berita->getBeritaDetail($seo);
 
         //=============================================================================================================================//
 

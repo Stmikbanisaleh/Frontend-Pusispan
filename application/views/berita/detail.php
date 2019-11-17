@@ -4,7 +4,8 @@
         <!-- Main Content -->
         <div class="col-md-9">
             <h2 class="title-v4">&nbsp;</h2>
-            <?php foreach ($getBeritaDetail as $gbd) { ?>
+            <?php 
+             foreach ($getBeritaDetail as $gbd) { ?>
             <!-- Blog Grid -->
             <div class="blog-grid margin-bottom-30">
                 <h2 class="blog-grid-title-lg">
@@ -17,7 +18,7 @@
                         <li><?= date('d-m-Y', strtotime($gbd['tanggal'])); ?></li>
                     </ul>
                 </div>
-                <img class="img-responsive" src="../../assets/img_berita/<?= $gbd['gambar']; ?>" alt="">
+                <img class="img-responsive" src="<?= URL_API_DOWNLOAD. $gbd['gambar']; ?>" alt="">
                 <?= $gbd['isi_berita']; ?>
             </div>
             <!-- End Blog Grid Tagds -->

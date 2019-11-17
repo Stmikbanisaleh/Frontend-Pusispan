@@ -56,6 +56,7 @@ class Profile extends CI_Controller
     
         $hasil_getisihalaman = $this->lapan_api_library->call('halaman/getisihalaman', ['token' => TOKEN, 'seo' => 'peran_tanggungjawab']);
         $data['peran'] = $hasil_getisihalaman['rows'][0];
+        $data['user'] = $this->lapan_api_library->call3('users/getuserbyemail', ['token' => TOKEN, $this->session->userdata('email')]);
 
         //=============================================================================================================================//
 
@@ -90,6 +91,7 @@ class Profile extends CI_Controller
         $data['struktur'] = $hasil_getisihalaman['rows'][0];
 
         //=============================================================================================================================//
+        $data['user'] = $this->lapan_api_library->call3('users/getuserbyemail', ['token' => TOKEN, $this->session->userdata('email')]);
 
         $data['uri'] = $this->uri->segment(1);
 

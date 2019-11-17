@@ -7,19 +7,17 @@ class Galeri extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('Galeri_model', 'm_galeri');
     }
 
     public function index()
     {
-        $data['user'] = $this->db->get_where('msuser', ['email' =>
-        $this->session->userdata('email')])->row_array();
 
         $this->load->library('pagination');
 
         $config['base_url'] = base_url().'galeri/index';
-        //$config['base_url'] = 'http://pusispan.stmik-banisaleh.com/pusispan/berita/index';
-        $config['total_rows'] = $this->m_galeri->hitungJumlahGaleri();
+        $jumlah = $this->lapan_api_library->call('album/getjumlahgaleri', ['token' => TOKEN]);
+        // print_r($jumlah);exit;
+        $config['total_rows'] = $jumlah;
         $config['per_page'] = 6;
 
         $config['full_tag_open'] = '<nav><ul class="pagination ">';
@@ -52,10 +50,18 @@ class Galeri extends CI_Controller
         $this->pagination->initialize($config);
 
         $data['start'] = $this->uri->segment(3);
-        $data['galeri'] = $this->m_galeri->getGaleri($config['per_page'], $data['start']);
+        $data_paging = [
+            'token' => TOKEN,
+            'limit' => $config['per_page'],
+            'start' => $data['start']
+        ];
+        $datagaleri =  $this->lapan_api_library->call('album/getgaleripaging', $data_paging);
+        // print_r($datagaleri);exit;
+        $data['galeri'] = $datagaleri;
 
 
         //=============================================================================================================================//
+        $data['user'] = $this->lapan_api_library->call3('users/getuserbyemail', ['token' => TOKEN, 'email' => $this->session->userdata('email')]);
 
         $data['uri'] = $this->uri->segment(1);
 
