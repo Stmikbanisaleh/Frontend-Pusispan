@@ -22,7 +22,7 @@ class Home extends CI_Controller
 
         $hasil_getkegiatanmt = $this->lapan_api_library->call('kegiatan/getkegiatanmt', ['token' => TOKEN]);
         $data['kmt'] = $hasil_getkegiatanmt['rows'][0];
-
+        
         $hasil_getkegiatanat = $this->lapan_api_library->call('kegiatan/getkegiatanat', ['token' => TOKEN]);
         $data['kat'] = $hasil_getkegiatanat['rows'][0];
 
